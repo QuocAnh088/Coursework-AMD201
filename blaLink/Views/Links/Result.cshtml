@@ -1,0 +1,41 @@
+﻿@model blaLink.Models.ShortLink
+
+<div class="container mt-5 text-center">
+    <div class="card shadow mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <h3 class="text-success">Success!</h3>
+            <p>Here is your shortened link:</p>
+            
+            <div class="input-group mb-3">
+                @* Note: Replace localhost:PORT with the actual port when debugging *@
+                <input type="text" id="shortUrl" class="form-control text-center fw-bold" 
+                       value="@Context.Request.Scheme://@Context.Request.Host/@Model.ShortCode" readonly>
+                <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">Copy</button>
+            </div>
+
+            <hr />
+
+            <h5>Scan the QR code to access the original link:</h5>
+            @if (ViewBag.QrCodeAsBase64 != null)
+            {
+                <img src="data:image/png;base64,@ViewBag.QrCodeAsBase64"
+                     alt="QR Code" style="width: 200px; height: 200px;" class="img-thumbnail" />
+            }
+            else
+            {
+                <p>Unable to generate QR code.</p>
+            }
+
+            <a href="@Url.Action("Create", "Links")" class="btn btn-link">Create another link</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("shortUrl");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+    }
+</script>

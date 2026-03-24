@@ -1,0 +1,42 @@
+﻿@model blaLink.Models.ShortLink
+
+@{
+    ViewData["Title"] = "Shorten Link";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">blaLink - Shorten link</h3>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+
+                    <form asp-action="Create" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Paste the long URL here:</label>
+                            <input type="url" name="originalUrl" class="form-control" placeholder="https://example.com/very-long-url..." required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Custom Alias (Optional):</label>
+                            <div class="input-group">
+                                <span class="input-group-text">localhost:xxxx/</span>
+                                <input type="text" name="customAlias" class="form-control" placeholder="e.g., special-offer" />
+                            </div>
+                            <small class="text-muted">Leave blank if you want the system to generate a random code.</small>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Shorten Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

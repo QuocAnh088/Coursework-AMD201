@@ -1,0 +1,38 @@
+﻿version: '3.4'
+
+services:
+  web:
+    container_name: blalink_web
+    image: ${DOCKER_REGISTRY-}web
+    build:
+      context: .
+      dockerfile: blaLink/Dockerfile
+      target: development
+    ports:
+      - "8080:80"
+    volumes:
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets
+      - ~/.aspnet/https:/root/.aspnet/https
+      - ~/.nuget/packages:/root/.nuget/packages
+      - ./blaLink:/src/blaLink
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - db
+      - redis
+
+  db:
+    container_name: blalink_db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Quoc@nh088097
+    ports:
+      - "1433:1433"
+
+  redis:
+    container_name: blalink_redis
+    image: redis:7
+    ports:
+      - "6379:6379"
