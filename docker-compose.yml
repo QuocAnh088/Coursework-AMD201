@@ -29,7 +29,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Quoc@nh088097
     ports:
-      - "1433:1433"
+      - "14330:1433"
 
   redis:
     container_name: blalink_redis
